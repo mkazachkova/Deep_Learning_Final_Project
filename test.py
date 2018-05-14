@@ -27,7 +27,7 @@ transform_list = [transforms.ToTensor(),
 transform = transforms.Compose(transform_list)
 
 for image_name in image_filenames:
-    img = load_img(image_dir + image_name)
+    img = load_img(image_dir + image_name,0)
     img = transform(img)
     input = Variable(img, volatile=True).view(1, -1, 256, 256)
 

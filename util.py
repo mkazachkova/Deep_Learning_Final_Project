@@ -6,9 +6,14 @@ def is_image_file(filename):
     return any(filename.endswith(extension) for extension in [".png", ".jpg", ".jpeg"])
 
 
-def load_img(filepath):
-    img = Image.open(filepath).convert('RGB')
-    img = img.resize((256, 256), Image.BICUBIC)
+def load_img(filepath,val):
+    img = None
+    if val == 0:
+	img = Image.open(filepath).convert('L')
+        img = img.resize((256, 256),1)
+    else:
+    	img = Image.open(filepath).convert('RGB')
+    	img = img.resize((256, 256), Image.BICUBIC)
     return img
 
 

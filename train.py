@@ -12,6 +12,13 @@ from networks import define_G, define_D, GANLoss, print_network
 from data import get_training_set, get_test_set
 import torch.backends.cudnn as cudnn
 
+import matplotlib 
+matplotlib.use('Agg') 
+import matplotlib.pyplot as plt
+
+
+
+
 # Training settings
 parser = argparse.ArgumentParser(description='pix2pix-PyTorch-implementation')
 parser.add_argument('--dataset', required=True, help='facades')
@@ -81,7 +88,14 @@ real_a = Variable(real_a)
 real_b = Variable(real_b)
 
 
+losses_d = []
+losses_g = []
+eps = []
+
+
 def train(epoch):
+    avg_loss_d = 0
+    avg_loss_g = 0
     for iteration, batch in enumerate(training_data_loader, 1):
         # forward
         real_a_cpu, real_b_cpu = batch[0], batch[1]
@@ -107,6 +121,7 @@ def train(epoch):
         
         # Combined loss
         loss_d = (loss_d_fake + loss_d_real) * 0.5
+	avg_loss_d += loss_d.data
 
         loss_d.backward()
        
@@ -125,14 +140,18 @@ def train(epoch):
         loss_g_l1 = criterionL1(fake_b, real_b) * opt.lamb
         
         loss_g = loss_g_gan + loss_g_l1
-        
+	avg_loss_g += loss_g.data        
+
+
         loss_g.backward()
 
         optimizerG.step()
 
         print("===> Epoch[{}]({}/{}): Loss_D: {:.4f} Loss_G: {:.4f}".format(
             epoch, iteration, len(training_data_loader), loss_d.data[0], loss_g.data[0]))
-
+    eps.append(epoch)
+    losses_d.append(avg_loss_d/len(training_data_loader)) 
+    losses_g.append(avg_loss_g/len(training_data_loader))
 
 def test():
     avg_psnr = 0
@@ -162,6 +181,11 @@ def checkpoint(epoch):
 
 for epoch in range(1, opt.nEpochs + 1):
     train(epoch)
-    test()
+    #test()
     if epoch % 50 == 0:
         checkpoint(epoch)
+plt.plot(eps, losses_d)
+plt.savefig('loss_d.png')
+
+plt.plot(eps, losses_g)
+plt.savefig('loss_g.png')

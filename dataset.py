@@ -21,9 +21,9 @@ class DatasetFromFolder(data.Dataset):
 
     def __getitem__(self, index):
         # Load Image
-        input = load_img(join(self.photo_path, self.image_filenames[index]))
+        input = load_img(join(self.photo_path, self.image_filenames[index]),0)
         input = self.transform(input)
-        target = load_img(join(self.sketch_path, self.image_filenames[index]))
+        target = load_img(join(self.sketch_path, self.image_filenames[index]),1)
         target = self.transform(target)
 
         return input, target
