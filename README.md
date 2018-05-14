@@ -1,4 +1,5 @@
-# pix2pix-pytorch
+# Deep Learning Final Project 2018 
+# Sarah Sukardi, Mariya Kazachkova, Hugh Han
 
 Deep Learning 2018 Final project building off of repository described below: 
 
