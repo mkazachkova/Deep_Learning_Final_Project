@@ -1,5 +1,7 @@
 # pix2pix-pytorch
 
+Deep Learning 2018 Final project building off of repository described below: 
+
 PyTorch implementation of [Image-to-Image Translation Using Conditional Adversarial Networks](https://arxiv.org/pdf/1611.07004v1.pdf).
 
 Based on [pix2pix](https://phillipi.github.io/pix2pix/) by Isola et al.
@@ -15,25 +17,6 @@ The examples from the paper:
 + NVIDIA GPU + CUDA 8.0 + CuDNNv5.1
 + pytorch
 + torchvision
-
-## Getting Started
-
-+ Clone this repo:
-
-    git clone git@github.com:mrzhu-cool/pix2pix-pytorch.git
-    cd pix2pix-pytorch
-
-+ Get dataset
-
-    unzip dataset/facades.zip
-
-+ Train the model:
-
-    python train.py --dataset facades --nEpochs 200 --cuda
-
-+ Test the model:
-
-    python test.py --dataset facades --model checkpoint/facades/netG_model_epoch_200.pth --cuda
 
 ## Acknowledgments
 
